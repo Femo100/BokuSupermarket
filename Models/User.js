@@ -20,10 +20,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Age: {
-        type: Number,
-        required: true
-    },
     phoneNumber: {
         type: String,
         required: true
@@ -32,18 +28,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    role: {
-        type: String,
-        enum: ['admin', 'user'],
-        default: 'user'
-    },
-    hasAtmCard: {
+    hasadminAccess: {
         type: Boolean,
         default: false
     },
-    timestamps: true // This option adds createdAt and updatedAt fields to the schema
+    role: {
+        type: String,
+        enum: ['superadmin', 'storemanager', 'storekeeper'],// Define the allowed roles
+        default: 'user'
+    }
 
-});
+},
+   {timestamps: true} // This option adds createdAt and updatedAt fields to the schema
+);
 
 //Create Model from the schema
 const User = mongoose.model('User', userSchema);
+
+// Export the User model so it can be used in other parts of the application
+module.exports = User;
