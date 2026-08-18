@@ -1,4 +1,4 @@
-const user = require('../Models/User');
+const User = require('../Models/User');
 const bcrypt = require('bcryptjs');
 
 //create a user
@@ -26,7 +26,7 @@ exports.createUser = async (req, res) => {
         }
 
         //encrypt the password before saving it to the database
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(2);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
         //create a new user
@@ -41,8 +41,10 @@ exports.createUser = async (req, res) => {
             role: req.body.role // Set the role based on the request body
         });
 
-        await user.save();
+        await user.save(); //save the user to the database
+
         res.status(201).json({ message: 'User created successfully', user });
+
     } catch (error) {
         res.status(400).json({ message: "Error creating user", error: error.message });
     }       
@@ -68,16 +70,16 @@ exports.loginUser = async (req, res) => {
         //check if the password is correct
         const isPasswordCorrect = await bcrypt.compare(password, user.password);
         if (!isPasswordCorrect) {
-            return res.status(400).json({ message: "Invalid email or password" });
+            return res.status(401).json({ message: "Invalid email or password" });
         }
 
         //generate a token for the user (you can use JWT or any other method)
         //const token = generateToken(user); // Implement your token generation logic here
 
         const jwt = require('jsonwebtoken');
-        const token = jwt.sign({ id: user._id, }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, email: user.email, role: user.role, hasadminAccess: user.hasadminAccess }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.status(200).json({ message: "Login successful", token, user });
+        res.status(200).json({ message: "Login successful", token, role: user.role, hasadminAccess: user.hasadminAccess });
     } catch (error) {
         res.status(400).json({ message: "Error logging in", error: error.message });
     }

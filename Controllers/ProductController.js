@@ -1,4 +1,5 @@
-const Product = require('../Models/Products');
+const Product = require('../Models/Products'); //Import the Product model to interact with the products collection in the database
+ 
 
 //create a new product
 exports.createProduct = async (req, res) => {
@@ -84,3 +85,14 @@ exports.searchProductsByName = async (req, res) => {
         res.status(500).json({ message: "Error searching products", error: error.message });
     }
 }; 
+
+//search products by size
+exports.searchProductsBySize = async (req, res) => {
+    try {
+        const { size } = req.query;
+        const products = await Product.find({ size: { $regex: size, $options: 'i' } }); 
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ message: "Error searching products", error: error.message });
+    }
+};

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'); // Import the mongoose library to interact with MongoDB
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['superadmin', 'storemanager', 'storekeeper'],// Define the allowed roles
+        enum: ['superadmin', 'storemanager', 'storekeeper', 'user'], // Define the allowed roles for users
         default: 'user'
     }
 
@@ -45,5 +45,5 @@ const userSchema = new mongoose.Schema({
 //Create Model from the schema
 const User = mongoose.model('User', userSchema);
 
-// Export the User model so it can be used in other parts of the application
-module.exports = User;
+module.exports = User; //export the User model so it can be used in other parts of the application
+
