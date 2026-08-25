@@ -1,12 +1,41 @@
-const multer = require('multer'); // Import the Multer library for handling file uploads
-const  {cloudinaryStorage}  = require('multer-storage-cloudinary'); // Import the Cloudinary storage engine for Multer
-const cloudinary = require('../Config/Cloudinary'); // Import the configured Cloudinary instance
+const multer = require('multer');
+const {CloudinaryStorage} = require('multer-storage-cloudinary');
+const cloudinary = require('../Config/cloudinary');
 
-const storage = cloudinaryStorage({
-    cloudinary: cloudinary, // Use the configured Cloudinary instance
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
     params: {
-        folder: 'bokusupermarket', // Specify the folder in Cloudinary where files will be stored
-        allowedFormats: ['jpg', 'jpeg', 'png'], // Specify allowed file formats for uploads
-        transformation: [{ width: 500, height: 500, crop: 'limit' }] // Optional transformation to limit image size
+        folder: "bokusupermarket",
+        allowedFormats: ['jpg', 'jpeg', 'png', 'gif'],
+        transformation: [{ width: 500, height: 500, crop: "limit" }]
     }
-});    
+});
+
+const upload = multer({ storage: storage });
+
+module.exports = upload;    
+
+
+// const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
+// const cloudinary = require("../Config/Cloudinary");
+
+// const storage = new CloudinaryStorage({
+//     cloudinary: cloudinary,
+
+//     params: {
+//         folder: "bokusupermarket",
+//         allowed_formats: ["jpg", "jpeg", "png", "gif", "bmp"],
+//         transformation: [{
+//                 width: 500,
+//                 height: 500,
+//                 crop: "limit"
+//             }]
+//     }
+// });
+
+// const upload = multer({
+//     storage: storage
+// });
+
+// module.exports = upload; 

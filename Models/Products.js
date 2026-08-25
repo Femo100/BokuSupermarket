@@ -1,10 +1,14 @@
 const mongoose = require('mongoose'); // Import the mongoose library to interact with MongoDB
 const productSchema = new mongoose.Schema({
     name: {
+        type: String,   
+        required: true
+    },
+    size: {
         type: String,
         required: true
     },
-    description: {
+    description: {      
         type: String,
         required: true
     },
@@ -13,22 +17,30 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     quantity: {
-        type: Number,
+        type: Number,   
         required: true
     },
-    size: {
-        type: String,
-        required: true
-    },
-    color: {
-        type: String,
-        //required: true
+    IsAvailable: {
+        type: Boolean,
+        default: true
     },
     
-},
-    {timestamps: true} // This option adds createdAt and updatedAt fields to the schema
-);
-//Create Model from the schema
-const Product = mongoose.model('Product', productSchema); // Create a Mongoose model named 'Product' using the defined schema
+        color: {
+            type: String,
+            
 
-module.exports = Product; //export the Product model so it can be used in other parts of the application
+    },
+    image: {
+        type: String,
+        required: false
+    }
+    
+},
+{timestamps: true} // Date created and updated at
+
+);  
+
+//create model from schema
+const Product = mongoose.model('Product', productSchema);
+
+module.exports = Product; //export the model to be used in other files

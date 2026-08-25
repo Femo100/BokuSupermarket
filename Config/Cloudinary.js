@@ -1,4 +1,4 @@
-const cloudinary = require('cloudinary').v2; // Import the Cloudinary library and use version 2 of the API
+const cloudinary = require("cloudinary").v2; // Import the Cloudinary library and use version 2 of the API
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
