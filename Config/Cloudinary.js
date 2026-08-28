@@ -1,5 +1,7 @@
 const cloudinary = require("cloudinary").v2; // Import the Cloudinary library and use version 2 of the API
 
+require('dotenv').config(); // Load environment variables from a .env file into process.env
+
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key: process.env.CLOUDINARY_API_KEY,
