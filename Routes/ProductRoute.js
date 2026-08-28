@@ -1,6 +1,6 @@
 const express = require('express'); // Import the Express library to create a web server and handle routing
 //import authentication middleware
-const { protect } = require('../Middleware/auth');
+const { protect } = require('../Middleware/Auth');
 const upload = require('../Middleware/upload');
 
 //import authorization middleware
