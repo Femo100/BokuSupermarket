@@ -1,23 +1,11 @@
-// Middleware/Auth.js 
-const jwt = require('jsonwebtoken');
+//middleware to verify the token
 
-// Middleware function to authenticate requests using JWT
+const jwt = require('jsonwebtoken'); // Import the jsonwebtoken library to handle JWT operations
 exports.protect = (req, res, next) => {
-    //
-    const authHeader = req.header('Authorization');
 
-    if (!authHeader) { // Check if the Authorization header is present
-        return res.status(401).json({ 
-            message: 'No token provided, authorization denied'
-        });
-    }
-
-    const token = authHeader.split(' ')[1]; // Extract the token from the Authorization header (assuming the format is "Bearer <token>")
-
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1]; //get the token from the header
     if (!token) {
-        return res.status(401).json({
-            message: 'No token provided, authorization denied'
-        });
+        return res.status(401).json({ message: 'Not authorized, no token' });
     }
 
     try {
@@ -28,8 +16,6 @@ exports.protect = (req, res, next) => {
         next();
 
     } catch (error) {
-        return res.status(401).json({
-            message: 'Token is not valid'
-        });
+        return res.status(401).json({ message: 'Not authorized, token failed' });
     }
 };
