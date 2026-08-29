@@ -16,7 +16,7 @@ app.use('/users', userRoute); //use the user route for all requests starting wit
 
 
 
-const connectDB = require('./Config/databaseconfig'); // Import the database connection function from the configuration file
+const connectDB = require('./Config/databaseConfig'); // Import the database connection function from the configuration file
 connectDB(); // Connect to MongoDB
 
 app.listen(process.env.PORT, () => {
